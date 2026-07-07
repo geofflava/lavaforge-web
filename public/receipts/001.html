@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Receipts 001 — I ran my scanner on my own agent first · lavaforge.dev</title>
-<meta name="description" content="Runworthy's first published receipts: my own agent repo graded PROVISIONAL, the false alarm it didn't raise, and how to run it yourself.">
+<meta name="description" content="Runworthy's first published receipts: what the scanner found on my own agent repo, the false alarm it didn't raise, and how to run it yourself.">
 <link rel="canonical" href="https://lavaforge.dev/receipts/001">
 <meta name="theme-color" content="#17130E">
 <meta name="color-scheme" content="dark">
@@ -14,13 +14,13 @@
 <meta property="og:site_name" content="lavaforge.dev">
 <meta property="og:url" content="https://lavaforge.dev/receipts/001">
 <meta property="og:title" content="Receipts 001 — I ran my scanner on my own agent first">
-<meta property="og:description" content="My own agent repo graded PROVISIONAL, the false alarm the scanner didn't raise, and how to run it yourself.">
+<meta property="og:description" content="What the scanner found on my own agent repo, the false alarm it didn't raise, and how to run it yourself.">
 <meta property="og:image" content="https://lavaforge.dev/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Receipts 001 — I ran my scanner on my own agent first">
-<meta name="twitter:description" content="My own agent repo graded PROVISIONAL, the false alarm the scanner didn't raise, and how to run it yourself.">
+<meta name="twitter:description" content="What the scanner found on my own agent repo, the false alarm it didn't raise, and how to run it yourself.">
 <meta name="twitter:image" content="https://lavaforge.dev/og.png">
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -109,19 +109,20 @@
 
     <p>Runworthy is my agent operations scanner: it reads a repo and answers the question you actually have — is this safe to run, and what do I fix first? This week I pointed it at two real agent repos, mine included. Both came back <strong>PROVISIONAL</strong>, the grade that means unknowns, not failures (the other two are GO and NO-GO). Here's what the reports said.</p>
 
-    <h2>My own repo, graded</h2>
-    <p><a href="https://github.com/geofflava/Research-Cascade">Research-Cascade</a> is my open-source research engine, an MCP server with a knowledge graph and trust scoring. The scan (<a href="/receipts/001-research-cascade">full report</a>) came back PROVISIONAL with a short list:</p>
+    <h2>My own repo, first</h2>
+    <p><a href="https://github.com/geofflava/Research-Cascade">Research-Cascade</a> is my open-source research engine — an MCP server with a knowledge graph and trust scoring. The first scan (<a href="/receipts/001-research-cascade">report</a>) came back PROVISIONAL with a short, specific list:</p>
     <ul>
       <li>
-        <p><strong>Update eleven packages.</strong> Eleven dependencies in the engine's npm lockfile have open security advisories — <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L1849">hono alone carries twenty</a>, and <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L3033">the one against vitest</a> is rated critical. An agent inherits every one. Straight from the report:</p>
+        <p><strong>Update eleven packages.</strong> Eleven dependencies in the engine's npm lockfile had open security advisories — <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L1849">hono alone carried twenty</a>, and <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L3033">the one against vitest</a> was rated critical. An agent inherits every one. This was the one hard, confirmed gap — not a judgment call, a fact. Straight from the report:</p>
         <blockquote><p><strong>Fix:</strong> Run your package manager's update or audit-fix command to bring these libraries to patched versions, starting with hono since it has the most advisories. Re-scan afterward to confirm the vulnerabilities are cleared.</p></blockquote>
-        <p>Confirmed gap; an afternoon of updates and a re-scan.</p>
       </li>
       <li>
-        <p><strong>Answer ten questions.</strong> A named owner, per-agent credentials, a tested kill-switch, an incident runbook: the ten non-negotiables a scan can't read from code. Runworthy asks them in plain English after the scan and folds the answers into the grade. A few of mine are "not yet."</p>
+        <p><strong>Answer ten questions.</strong> A named owner, per-agent credentials, a tested kill-switch, an incident runbook: the ten non-negotiables a scan can't read from code. Runworthy asks them in plain English after the scan and folds the answers into the grade. Honest answer at the time: most were "not yet."</p>
       </li>
     </ul>
-    <p>What it didn't flag: one of the bundled detectors found six prompt-injection strings in the repo — all in test files, because Research-Cascade tests its own injection defenses. The pipeline treats test fixtures as non-evidence, so none of them turned into an assessment.</p>
+    <p>So I did the work instead of writing about it. The eleven packages: updated, re-scanned, clean — the lockfile <em>and</em> the manifest check both quiet. The ten questions: I built what they ask for rather than just attesting — a kill-switch that refuses every tool call until a human clears it, a human approval gate on the destructive actions (with soft-delete, so a rejected finding is recoverable, not gone), a replayable action log, per-role tool limits, an incident runbook. Each one is a commit, not a checkbox.</p>
+    <p>The part I didn't plan for: before I trust my own work I run an adversarial pass that tries to <em>disprove</em> every "done." It caught two controls I'd written up as finished but hadn't actually wired — an allowlist that was never loaded, a breaker that was never called. Documented-but-not-real is the precise failure this whole product exists to catch, and it caught me. I fixed both, then re-checked. The dependency gap is closed and the ten now have real answers behind them; the grade followed, but the grade was never the point — the point is it found the actual work and told me what to do first.</p>
+    <p>What it didn't flag: one detector found six prompt-injection strings in the repo — all in test files, because Research-Cascade tests its own injection defenses. The pipeline treats test fixtures as non-evidence, so none of them turned into an assessment.</p>
 
     <h2>The false alarm it didn't raise</h2>
     <p>The second repo is a widely used open-source research agent. I'm not naming it or publishing its report — house policy until a maintainer's seen it. Same shape as mine: PROVISIONAL, four dependencies with open advisories (two rated critical), and two code paths flagged as leads worth an engineer's hour.</p>
