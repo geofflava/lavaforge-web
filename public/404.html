@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found — lavaforge.dev</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#17130E">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<style>
+  :root{
+    --basalt:#17130E; --basalt-2:#211B14; --ink:#EDE5D8; --ash:#9C9080;
+    --line:rgba(237,229,216,.14); --line-soft:rgba(237,229,216,.08);
+    --ember:#FF5B1F;
+    --mono:"Cascadia Code","JetBrains Mono",Consolas,ui-monospace,"SF Mono",monospace;
+    --body:system-ui,"Segoe UI",Inter,-apple-system,sans-serif;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{
+    background:var(--basalt) radial-gradient(90rem 28rem at 50% -12rem, rgba(255,91,31,.07), transparent 70%) no-repeat;
+    color:var(--ink);font:16px/1.65 var(--body);-webkit-font-smoothing:antialiased;
+    min-height:100vh;display:grid;place-items:center;padding:24px;
+  }
+  a{color:var(--ink)}
+  a:hover{color:var(--ember)}
+  :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:2px}
+  .brief{width:100%;max-width:560px;border:1px solid var(--line);border-radius:2px;background:linear-gradient(180deg,rgba(33,27,20,.85),rgba(23,19,14,.4));overflow:hidden}
+  .brief-bar{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--line);background:rgba(33,27,20,.9)}
+  .brief-bar .label{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+  .brief-bar::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+  .brief-body{padding:34px 32px 30px}
+  .code{font:700 12px/1 var(--mono);letter-spacing:.14em;color:var(--ember);text-transform:uppercase}
+  h1{font:800 clamp(22px,4vw,30px)/1.3 var(--mono);letter-spacing:-.01em;margin:16px 0 14px}
+  p{color:var(--ash);max-width:52ch}
+  .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .btn{font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;padding:13px 18px;border:1px solid var(--line)}
+  .btn.primary{background:var(--ember);border-color:var(--ember);color:#1a0d05}
+  .btn.primary:hover{background:#ff7038}
+  .btn.quiet:hover{border-color:var(--ember);color:var(--ember)}
+</style>
+</head>
+<body>
+  <main class="brief" aria-label="404">
+    <div class="brief-bar"><span class="label">lavaforge.dev · 404</span></div>
+    <div class="brief-body">
+      <span class="code">No page at that path</span>
+      <h1>This one isn't here.</h1>
+      <p>The link may be old, or the page never shipped. The current work is on the build log.</p>
+      <div class="ctas">
+        <a class="btn primary" href="/">Back to lavaforge.dev →</a>
+        <a class="btn quiet" href="https://github.com/geofflava">GitHub — geofflava</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

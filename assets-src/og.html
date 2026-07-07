@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>lavaforge.dev — social card</title>
+<style>
+  :root{
+    --basalt:#17130E; --basalt-2:#211B14; --ink:#EDE5D8; --ash:#9C9080;
+    --line:rgba(237,229,216,.14); --line-soft:rgba(237,229,216,.08);
+    --ember:#FF5B1F; --go:#7FC29B; --wip:#E8B450;
+    --mono:"Cascadia Code","JetBrains Mono",Consolas,ui-monospace,"SF Mono",monospace;
+  }
+  *{box-sizing:border-box;margin:0}
+  html,body{width:1200px;height:630px}
+  body{
+    background:var(--basalt) radial-gradient(70rem 34rem at 82% -8rem, rgba(255,91,31,.16), transparent 62%) no-repeat;
+    color:var(--ink);font-family:var(--mono);
+    padding:70px 76px;display:flex;flex-direction:column;justify-content:space-between;
+    -webkit-font-smoothing:antialiased;
+  }
+  .top{display:flex;align-items:center;justify-content:space-between}
+  .wordmark{font-weight:700;font-size:19px;letter-spacing:.2em}
+  .wordmark em{color:var(--ember);font-style:normal}
+  .eyebrow{font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--ash)}
+  h1{font-weight:800;font-size:53px;line-height:1.18;letter-spacing:-.01em;max-width:20ch}
+  h1 .ans{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:5px;text-underline-offset:.26em}
+  h1 .q{color:var(--ash)}
+  .status{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .mname{font-weight:700;font-size:16px;letter-spacing:.1em}
+  .chip{font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:2px;padding:6px 11px}
+  .chip.wip{color:var(--wip);border-color:rgba(232,180,80,.5)}
+  .chip.go{color:var(--go);border-color:rgba(127,194,155,.5)}
+  .sep{color:var(--line);opacity:.5}
+  .foot{font-size:16px;letter-spacing:.08em;color:var(--ash)}
+  .foot b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+  <div class="top">
+    <span class="wordmark">LAVA<em>FORGE</em>.DEV</span>
+    <span class="eyebrow">build log</span>
+  </div>
+  <h1><span class="q">Are your AI agents safe to run?</span> <span class="ans">I'm building the tool that answers that.</span></h1>
+  <div class="status">
+    <span class="mname">RUNWORTHY</span><span class="chip wip">Phase 0 · in work</span>
+    <span class="sep">·</span>
+    <span class="mname">AGENT FLIGHT RULES</span><span class="chip go">v0.2.0</span>
+  </div>
+  <div class="foot"><b>Geoff "Lava" Lavagnino</b> &nbsp;·&nbsp; Runworthy &nbsp;·&nbsp; Agent Flight Rules &nbsp;·&nbsp; GO / NO-GO for AI agents</div>
+</body>
+</html>

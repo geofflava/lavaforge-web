@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geoff "Lava" Lavagnino — tools for running AI agents safely</title>
+<meta name="description" content="Runworthy, Agent Flight Rules, and the rest of the workshop. Tools that answer whether an AI agent is safe to run.">
+<link rel="canonical" href="https://lavaforge.dev/">
+<meta name="theme-color" content="#17130E">
+<meta name="color-scheme" content="dark">
+<meta name="author" content="Geoff &quot;Lava&quot; Lavagnino">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="lavaforge.dev">
+<meta property="og:url" content="https://lavaforge.dev/">
+<meta property="og:title" content="Geoff &quot;Lava&quot; Lavagnino — tools for running AI agents safely">
+<meta property="og:description" content="Runworthy, Agent Flight Rules, and the rest of the workshop. Tools that answer whether an AI agent is safe to run.">
+<meta property="og:image" content="https://lavaforge.dev/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="lavaforge.dev build log — Are your AI agents safe to run? I'm building the tool that answers that.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Geoff &quot;Lava&quot; Lavagnino — tools for running AI agents safely">
+<meta name="twitter:description" content="Runworthy, Agent Flight Rules, and the rest of the workshop. Tools that answer whether an AI agent is safe to run.">
+<meta name="twitter:image" content="https://lavaforge.dev/og.png">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+  :root{
+    --basalt:#17130E; --basalt-2:#211B14; --ink:#EDE5D8; --ash:#9C9080;
+    --line:rgba(237,229,216,.14); --line-soft:rgba(237,229,216,.08);
+    --ember:#FF5B1F; --go:#7FC29B; --wip:#E8B450;
+    --mono:"Cascadia Code","JetBrains Mono",Consolas,ui-monospace,"SF Mono",monospace;
+    --body:system-ui,"Segoe UI",Inter,-apple-system,sans-serif;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    background:var(--basalt) radial-gradient(90rem 28rem at 50% -12rem, rgba(255,91,31,.07), transparent 70%) no-repeat;
+    color:var(--ink); font:16px/1.65 var(--body);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--ink)}
+  a:hover{color:var(--ember)}
+  :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:2px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  .label{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+
+  /* ---------- nav ---------- */
+  header.site{border-bottom:1px solid var(--line-soft)}
+  .nav{display:flex;align-items:center;gap:18px 28px;padding:18px 0;flex-wrap:wrap}
+  .wordmark{font:700 13px/1 var(--mono);letter-spacing:.18em;text-decoration:none;color:var(--ink)}
+  .wordmark em{color:var(--ember);font-style:normal}
+  .nav nav{margin-left:auto;display:flex;gap:14px 22px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .nav nav a{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--ash)}
+  .nav nav a:hover{color:var(--ember)}
+  .gh{display:inline-flex;align-items:center;gap:7px;color:var(--ink)!important}
+  .gh svg{width:15px;height:15px;fill:currentColor}
+
+  /* ---------- step brief (signature) ---------- */
+  .brief{border:1px solid var(--line);border-radius:2px;background:linear-gradient(180deg,rgba(33,27,20,.85),rgba(23,19,14,.4));margin:56px 0 0;overflow:hidden}
+  .brief-bar{display:flex;align-items:center;gap:12px;padding:10px 20px;border-bottom:1px solid var(--line);background:rgba(33,27,20,.9)}
+  .brief-bar .label{color:var(--ash)}
+  .brief-bar::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+  .brief-body{padding:34px 32px 30px}
+  .callsign{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline}
+  .callsign .cs{font:700 12px/1 var(--mono);letter-spacing:.14em;color:var(--ember)}
+  .callsign .nm{font:500 12px/1 var(--mono);letter-spacing:.14em;color:var(--ash);text-transform:uppercase}
+  h1.boldface{
+    font:800 clamp(25px,4.2vw,40px)/1.32 var(--mono);
+    letter-spacing:-.01em;margin:22px 0 18px;max-width:26ch;
+  }
+  h1.boldface .ans{
+    text-decoration:underline;text-decoration-color:var(--ember);
+    text-decoration-thickness:3px;text-underline-offset:.3em;
+  }
+  .brief-sub{color:var(--ash);max-width:62ch;font-size:17px}
+  .brief-sub strong{color:var(--ink);font-weight:600}
+  .missions{margin:30px 0 4px;border-top:1px solid var(--line-soft)}
+  .missions>.label{display:block;margin:16px 0 4px}
+  .mrow{display:grid;grid-template-columns:210px auto 1fr;gap:8px 16px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line-soft)}
+  .mrow .mname{font:700 13px/1.3 var(--mono);letter-spacing:.1em}
+  .mrow .mdesc{color:var(--ash);font-size:13.5px}
+  .chip{font:600 10.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;border:1px solid;border-radius:2px;padding:4px 8px;white-space:nowrap;justify-self:start}
+  .chip.wip{color:var(--wip);border-color:rgba(232,180,80,.45)}
+  .chip.go{color:var(--go);border-color:rgba(127,194,155,.45)}
+  .ctas{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .btn{font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;padding:13px 18px;border:1px solid var(--line)}
+  .btn.primary{background:var(--ember);border-color:var(--ember);color:#1a0d05}
+  .btn.primary:hover{background:#ff7038;color:#1a0d05}
+  .btn.quiet:hover{border-color:var(--ember);color:var(--ember)}
+
+  /* load sequence */
+  .brief-body>*{opacity:0;transform:translateY(6px);animation:rise .5s ease forwards}
+  .brief-body>*:nth-child(1){animation-delay:.05s}.brief-body>*:nth-child(2){animation-delay:.15s}
+  .brief-body>*:nth-child(3){animation-delay:.25s}.brief-body>*:nth-child(4){animation-delay:.4s}
+  .brief-body>*:nth-child(5){animation-delay:.55s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.brief-body>*{animation:none;opacity:1;transform:none}}
+
+  /* ---------- sections ---------- */
+  section{padding:64px 0 8px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:26px}
+  .sec-head .tick{font:700 13px/1 var(--mono)}
+  .tick.done{color:var(--go)} .tick.work{color:var(--wip)}
+  .sec-head .sid{font:600 11px/1 var(--mono);letter-spacing:.14em;color:var(--ash)}
+  .sec-head h2{font:700 15px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+  .sec-head .rule{flex:1;height:1px;background:var(--line-soft);align-self:center}
+  .sec-head .st{font:600 10.5px/1 var(--mono);letter-spacing:.12em;color:var(--ash);text-transform:uppercase}
+
+  .cards{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+  .card{border:1px solid var(--line);border-radius:2px;background:var(--basalt-2);padding:24px 24px 20px;transition:border-color .18s ease}
+  .card:hover{border-color:rgba(255,91,31,.5)}
+  .card .kicker{font:600 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ember)}
+  .card h3{font:700 20px/1.2 var(--mono);letter-spacing:.02em;margin:12px 0 10px}
+  .card p{color:var(--ash);font-size:14.5px}
+  .card .status{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font:500 12px/1.6 var(--mono);color:var(--wip)}
+  .card .links{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
+  .card .links a{font:600 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ember);padding-bottom:2px}
+  .card .links a:hover{color:var(--ember)}
+  .afr{grid-column:1/-1;display:grid;grid-template-columns:250px 1fr;gap:8px 32px;align-items:start;border-left:3px solid var(--ember)}
+  .afr h3{margin-top:10px;margin-bottom:0}
+  .afr p{align-self:center}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:40px}
+  .about-grid p{margin-bottom:14px;color:var(--ash);font-size:15.5px}
+  .about-grid p strong{color:var(--ink);font-weight:600}
+  .creds{display:flex;flex-direction:column;gap:10px}
+  .cred{border:1px solid var(--line);border-radius:2px;padding:14px 16px;font:600 11.5px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+  .cred span{display:block;color:var(--ash);font-weight:500;letter-spacing:.06em;margin-top:3px;text-transform:none}
+
+  /* postmortems */
+  .intro{color:var(--ash);margin:-10px 0 24px;font-size:15px}
+  .pms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .pm{border:1px solid var(--line);border-radius:2px;background:var(--basalt-2);padding:22px}
+  .pm h3{font:700 14px/1.4 var(--mono);letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+  .pm p{color:var(--ash);font-size:14px}
+  .pm .lesson{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font:600 12px/1.55 var(--mono);color:var(--ink)}
+  .pm .lesson::before{content:"LESSON — ";color:var(--ember)}
+
+  /* work */
+  .work-rows{border-top:1px solid var(--line)}
+  .wrow{display:grid;grid-template-columns:280px auto 1fr;gap:8px 18px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line-soft)}
+  .wrow h3{font:700 14.5px/1.4 var(--mono);letter-spacing:.03em}
+  .wrow p{color:var(--ash);font-size:14px}
+  .tag{font:600 10px/1 var(--mono);letter-spacing:.12em;border:1px solid var(--line);border-radius:2px;padding:4px 7px;color:var(--ash);justify-self:start;white-space:nowrap}
+  .tag.open{color:var(--go);border-color:rgba(127,194,155,.45)}
+  .wrow a.tag.open{text-decoration:none}
+  .wrow a.tag.open:hover{border-color:var(--go)}
+
+  /* contact + footer */
+  .contact-inner{border:1px solid var(--line);border-radius:2px;background:var(--basalt-2);padding:34px 32px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+  .contact-inner p{color:var(--ash);max-width:46ch}
+  .contact-inner .consult{font-size:13px;margin-top:8px}
+  footer.site{margin-top:72px;border-top:1px solid var(--line-soft);padding:26px 0 40px}
+  .foot{display:flex;flex-wrap:wrap;gap:10px 26px;align-items:baseline;justify-content:space-between;color:var(--ash);font:500 12px/1.7 var(--mono)}
+  .foot nav{display:flex;gap:18px;flex-wrap:wrap}
+  .foot a{color:var(--ash);text-decoration:none}
+  .foot a:hover{color:var(--ember)}
+
+  @media (max-width:520px){
+    .nav{gap:12px 16px}
+    .nav nav{margin-left:0;justify-content:flex-start;gap:10px 14px}
+    .nav nav a{font-size:11px;letter-spacing:.05em}
+  }
+  @media (max-width:860px){
+    .cards,.pms,.about-grid{grid-template-columns:1fr}
+    .mrow{grid-template-columns:auto 1fr;grid-template-areas:"n c" "d d"}
+    .mrow .mname{grid-area:n}.mrow .chip{grid-area:c;justify-self:end}.mrow .mdesc{grid-area:d}
+    .wrow{grid-template-columns:1fr auto;grid-template-areas:"t g" "d d"}
+    .wrow h3{grid-area:t}.wrow .tag{grid-area:g}.wrow p{grid-area:d}
+    .afr{grid-template-columns:1fr}
+    .afr p{align-self:start}
+    .brief-body{padding:26px 20px 24px}
+  }
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap nav">
+    <a class="wordmark" href="/">LAVA<em>FORGE</em>.DEV</a>
+    <nav aria-label="Site">
+      <a href="#building">Now building</a>
+      <a href="#about">About</a>
+      <a href="#postmortems">Postmortems</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+      <a class="gh" href="https://github.com/geofflava" aria-label="GitHub — geofflava">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+        geofflava
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- signature: the step brief -->
+  <div class="brief" role="region" aria-label="Step brief">
+    <div class="brief-bar"><span class="label">lavaforge.dev · build log</span></div>
+    <div class="brief-body">
+      <div class="callsign"><span class="cs">Geoff "Lava" Lavagnino</span><span class="nm">Obsidicore · Firebase / GCP</span></div>
+      <h1 class="boldface">Are your AI agents safe to run? <span class="ans">I'm building the tool that answers that.</span></h1>
+      <p class="brief-sub"><strong>Runworthy</strong> reads your repo, asks the questions code can't answer, and gives a plain verdict: <strong>GO or NO-GO</strong>, and what to fix first. The framework behind it is free for anyone.</p>
+      <div class="missions">
+        <span class="label">Current work</span>
+        <div class="mrow">
+          <span class="mname">RUNWORTHY</span>
+          <span class="chip wip">Phase 0 · in work</span>
+          <span class="mdesc">engine + detectors — fingerprint, SkillSpector · gitleaks · OSV</span>
+        </div>
+        <div class="mrow">
+          <span class="mname">AGENT FLIGHT RULES</span>
+          <span class="chip go">v0.2.0</span>
+          <span class="mdesc">29 controls · the Boldface · CC BY 4.0</span>
+        </div>
+      </div>
+      <div class="ctas">
+        <a class="btn primary" href="https://github.com/geofflava">Follow the build →</a>
+        <a class="btn quiet" href="https://github.com/geofflava/agent-flight-rules">Read the flight rules</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="building">
+    <div class="sec-head">
+      <span class="tick work" aria-hidden="true">[&nbsp;]</span><span class="sid">LF-01</span>
+      <h2>Now building</h2><span class="rule"></span><span class="st">in work</span>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <span class="kicker">Flagship · open source</span>
+        <h3>Runworthy</h3>
+        <p>Scans your repo for agent security gaps, asks the operational questions code can't answer, and returns a plain-English verdict: GO or NO-GO, and what to fix first.</p>
+        <p class="status">Phase 0 in progress — engine and detectors.</p>
+        <div class="links">
+          <a href="https://github.com/geofflava/runworthy">Repository</a>
+          <a href="https://github.com/geofflava/agent-flight-rules">How it grades</a>
+          <a href="https://github.com/geofflava">Follow along</a>
+        </div>
+      </article>
+      <article class="card">
+        <span class="kicker">Open source · MCP</span>
+        <h3>Research Cascade</h3>
+        <p>A progressive deep-research engine that plugs into any MCP client — persistent knowledge graph, source trust scoring, and it tells you when to stop. 78 tests, dogfood-validated.</p>
+        <div class="links"><a href="https://github.com/geofflava/Research-Cascade">Repository</a></div>
+      </article>
+      <article class="card afr">
+        <div>
+          <span class="kicker">The framework</span>
+          <h3>Agent Flight Rules</h3>
+        </div>
+        <p>The rubric Runworthy grades against: 29 operational controls across six domains, ten of them non-negotiable. Free under CC BY 4.0, and written to sit alongside OWASP's agentic Top 10.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head">
+      <span class="tick done" aria-hidden="true">[✓]</span><span class="sid">LF-02</span>
+      <h2>About</h2><span class="rule"></span>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I build agent systems on Firebase and Google Cloud at <strong>Obsidicore</strong>, and safety tooling for anyone else running agents. Before that I led engineering at an EdTech company, shipping RAG pipelines for K-12 school districts on Vertex AI.</p>
+        <p>The Air Force is where I learned the operational side: security operations, contingency planning, checklists written for the day something breaks. Lava was my callsign. It stuck to the domain, and the rest shows up in how I build.</p>
+        <p>I think in <strong>systems, not silos</strong>. Father of three. The best engineering starts with the people it serves.</p>
+      </div>
+      <div class="creds">
+        <div class="cred">USAF veteran<span>Security ops &amp; contingency planning</span></div>
+        <div class="cred">Systems, not silos<span>Behavioral counseling background meets systems engineering</span></div>
+        <div class="cred">Father of three<span>Three good reasons to log off on time</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="postmortems">
+    <div class="sec-head">
+      <span class="tick done" aria-hidden="true">[✓]</span><span class="sid">LF-03</span>
+      <h2>What I got wrong building two companies</h2><span class="rule"></span>
+    </div>
+    <p class="intro">Things I'd do differently, written down while they still sting.</p>
+    <div class="pms">
+      <article class="pm">
+        <h3>Built for scale too early</h3>
+        <p>Architected multi-tenant infrastructure for dozens of school districts when we had three. That engineering time should have gone to features that drove adoption.</p>
+        <p class="lesson">Validate demand before scaling infrastructure.</p>
+      </article>
+      <article class="pm">
+        <h3>Automated before the workflow was proven</h3>
+        <p>20+ CLI commands and four content pipelines before the strategy was validated. A pivot wrote most of it off.</p>
+        <p class="lesson">Automate after the workflow is proven, not before.</p>
+      </article>
+      <article class="pm">
+        <h3>Breadth over depth</h3>
+        <p>Range is my strength for novel problems, but it can underestimate depth work. Now I pair with specialists instead of fumbling through alone.</p>
+        <p class="lesson">Know when to bring in experts.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="sec-head">
+      <span class="tick done" aria-hidden="true">[✓]</span><span class="sid">LF-04</span>
+      <h2>Shipped work</h2><span class="rule"></span>
+    </div>
+    <div class="work-rows">
+      <div class="wrow">
+        <h3>AI research platform</h3><span class="tag">Company</span>
+        <p>900+ assets/month across four automated pipelines — Gemini analysis, summarization, knowledge-graph construction on Cloud Functions.</p>
+      </div>
+      <div class="wrow">
+        <h3>Multi-brand content automation</h3><span class="tag">Company</span>
+        <p>Multi-brand publishing pipeline: X API distribution, Cloud Scheduler timing, 20+ operational CLI commands.</p>
+      </div>
+      <div class="wrow">
+        <h3>K-12 RAG pipeline</h3><span class="tag">Company</span>
+        <p>Curriculum processing on Vertex AI embeddings + vector search; multi-tenant Firestore serving school districts.</p>
+      </div>
+      <div class="wrow">
+        <h3>Research Cascade</h3><a class="tag open" href="https://github.com/geofflava/Research-Cascade">Open — repo</a>
+        <p>MCP research engine — knowledge graph, trust scoring, self-regulation. MIT.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head">
+      <span class="tick done" aria-hidden="true">[✓]</span><span class="sid">LF-05</span>
+      <h2>Follow the build</h2><span class="rule"></span>
+    </div>
+    <div class="contact-inner">
+      <div>
+        <p>Most of what I make ends up on GitHub, mistakes included.</p>
+        <p class="consult">I take a few Firebase, GCP, and agent-safety engagements a year.</p>
+      </div>
+      <div class="ctas">
+        <a class="btn primary" href="https://github.com/geofflava">GitHub — geofflava</a>
+        <a class="btn quiet" href="mailto:geoff@obsidicore.com">geoff@obsidicore.com</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot">
+    <span>© 2026 Geoff "Lava" Lavagnino · lavaforge.dev is the workshop; Obsidicore is the company.</span>
+    <nav aria-label="Footer">
+      <a href="https://github.com/geofflava">GitHub</a>
+      <a href="https://obsidicore.com">Obsidicore</a>
+      <a href="https://github.com/geofflava/agent-flight-rules">Agent Flight Rules</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

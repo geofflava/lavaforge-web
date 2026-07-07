@@ -1,0 +1,13 @@
+{
+  "name": "lavaforge.dev",
+  "short_name": "lavaforge.dev",
+  "description": "Runworthy, Agent Flight Rules, and the rest of the workshop.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#17130E",
+  "theme_color": "#17130E",
+  "icons": [
+    { "src": "/favicon.svg", "type": "image/svg+xml", "sizes": "any" },
+    { "src": "/apple-touch-icon.png", "type": "image/png", "sizes": "180x180" }
+  ]
+}
