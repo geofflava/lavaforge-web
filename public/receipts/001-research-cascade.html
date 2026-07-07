@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runworthy report — Research-Cascade · lavaforge.dev</title>
+<meta name="description" content="The verbatim graded Runworthy report behind Receipts 001: geofflava/Research-Cascade at commit 5ea2ec3.">
+<link rel="canonical" href="https://lavaforge.dev/receipts/001-research-cascade">
+<meta name="theme-color" content="#17130E">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="index,follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+  :root{
+    --basalt:#17130E; --basalt-2:#211B14; --ink:#EDE5D8; --ash:#9C9080;
+    --line:rgba(237,229,216,.14); --line-soft:rgba(237,229,216,.08);
+    --ember:#FF5B1F; --go:#7FC29B; --wip:#E8B450;
+    --mono:"Cascadia Code","JetBrains Mono",Consolas,ui-monospace,"SF Mono",monospace;
+    --body:system-ui,"Segoe UI",Inter,-apple-system,sans-serif;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--basalt);color:var(--ink);font:15.5px/1.65 var(--body);-webkit-font-smoothing:antialiased}
+  a{color:var(--ink)}
+  a:hover{color:var(--ember)}
+  :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:2px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  .label{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+  header.site{border-bottom:1px solid var(--line-soft)}
+  .nav{display:flex;align-items:center;gap:18px 28px;padding:18px 0;flex-wrap:wrap}
+  .wordmark{font:700 13px/1 var(--mono);letter-spacing:.18em;text-decoration:none;color:var(--ink)}
+  .wordmark em{color:var(--ember);font-style:normal}
+  .nav nav{margin-left:auto}
+  .nav nav a{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--ash)}
+  .nav nav a:hover{color:var(--ember)}
+  .noticebar{border:1px solid var(--line);border-radius:2px;background:rgba(33,27,20,.7);padding:12px 16px;margin:40px auto 0;max-width:860px;font:500 12.5px/1.7 var(--mono);color:var(--ash)}
+  .noticebar a{color:var(--ink)}
+  article{max-width:860px;margin:0 auto;padding:34px 0 0}
+  h1{font:800 clamp(19px,2.8vw,26px)/1.35 var(--mono);letter-spacing:-.01em;margin:0 0 14px;overflow-wrap:anywhere}
+  h2{font:700 16px/1.4 var(--mono);margin:34px 0 12px}
+  h3{font:700 14.5px/1.4 var(--mono);margin:26px 0 6px;color:var(--ink)}
+  p{margin:0 0 13px}
+  p.dim{color:var(--ash);font-style:italic}
+  p.cardmeta{font:600 12px/1.6 var(--mono);letter-spacing:.05em;color:var(--wip);margin-top:-2px}
+  ul{padding-left:22px;margin:0 0 14px}
+  li{margin:0 0 9px}
+  code{font:500 12.5px/1.5 var(--mono);background:var(--basalt-2);border:1px solid var(--line-soft);border-radius:2px;padding:1px 4px;overflow-wrap:anywhere}
+  a{overflow-wrap:anywhere}
+  .tablewrap{overflow-x:auto;margin:0 0 16px;border:1px solid var(--line);border-radius:2px}
+  table{border-collapse:collapse;width:100%;font:500 13px/1.5 var(--mono)}
+  th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line-soft)}
+  th{color:var(--ash);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+  tbody tr:last-child td{border-bottom:none}
+  hr{border:none;border-top:1px solid var(--line-soft);margin:30px 0}
+  footer.site{margin-top:64px;border-top:1px solid var(--line-soft);padding:26px 0 40px}
+  .foot{display:flex;gap:14px 28px;flex-wrap:wrap;align-items:center;font:500 12px/1.7 var(--mono);color:var(--ash)}
+  .foot nav{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap}
+  .foot a{color:var(--ash);text-decoration:none}
+  .foot a:hover{color:var(--ember)}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap nav">
+    <a class="wordmark" href="/">LAVA<em>FORGE</em>.DEV</a>
+    <nav aria-label="Site"><a href="/receipts/001">← Receipts 001</a></nav>
+  </div>
+</header>
+<main class="wrap">
+  <div class="noticebar">This is the verbatim graded report behind <a href="/receipts/001">Receipts 001</a> — output of <code>runworthy scan</code>, unedited. Every evidence link opens the cited line at the scanned commit.</div>
+  <article>
+<h1>Runworthy report — https://github.com/geofflava/Research-Cascade</h1>
+<h2>Verdict: PROVISIONAL · provisional band — 1 of 29 controls assessed</h2>
+<p>commit <code>5ea2ec3a89c458d85a6233e97a72503485e6b02b</code> · scanned 2026-07-07T08:21:28Z · runworthy 0.2.0 · detectors: gitleaks 8.30.1, osv-scanner 2.4.0, skillspector 2.3.9</p>
+<p><strong>Agent surface:</strong> MCP. 26 finding(s) — by detector: osv-scanner: 11, skillspector: 15. By severity: critical: 2, high: 12, medium: 4, low: 8.</p>
+<h2>The Boldface — the ten non-negotiables</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Gate</th><th>Control</th><th>Status</th></tr></thead><tbody>
+<tr><td>AFR-01</td><td>Agent registry with a named owner</td><td>? not assessed</td></tr>
+<tr><td>AFR-04</td><td>Minimum scope</td><td>? not assessed</td></tr>
+<tr><td>AFR-05</td><td>Per-agent credentials</td><td>? not assessed</td></tr>
+<tr><td>AFR-09</td><td>Vet before you connect</td><td>? not assessed</td></tr>
+<tr><td>AFR-11</td><td>Consequence classification</td><td>? not assessed</td></tr>
+<tr><td>AFR-12</td><td>Approval gate on High</td><td>? not assessed</td></tr>
+<tr><td>AFR-16</td><td>Action log</td><td>? not assessed</td></tr>
+<tr><td>AFR-17</td><td>Anomaly alerts</td><td>? not assessed</td></tr>
+<tr><td>AFR-20</td><td>Kill-switch</td><td>? not assessed</td></tr>
+<tr><td>AFR-25</td><td>Incident runbook</td><td>? not assessed</td></tr>
+</tbody></table></div>
+<h2>Confirmed gaps</h2>
+<p class="dim">Grounded in a specific finding. Fix these first.</p>
+<h3>AFR-10 — Scan the agent stack</h3>
+<p class="cardmeta">Confirmed  ·  high severity</p>
+<p>Your dependency scanner found several known, publicly disclosed vulnerabilities in packages your code relies on, in servers/cascade-engine/package-lock.json. These include hono (20 advisories, line 1849), path-to-regexp (line 2195), picomatch (line 2229), postcss (line 2251), fast-uri (line 1661), ip-address (line 1926), and esbuild (line 1487) — real, confirmed issues, not a guess.</p>
+<p><strong>Fix:</strong> Run your package manager's update or audit-fix command to bring these libraries to patched versions, starting with hono since it has the most advisories. Re-scan afterward to confirm the vulnerabilities are cleared.</p>
+<p><strong>Evidence:</strong> <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L467">servers/cascade-engine/package-lock.json:467</a> · osv-scanner · <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L1487">servers/cascade-engine/package-lock.json:1487</a> · osv-scanner · <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L1661">servers/cascade-engine/package-lock.json:1661</a> · osv-scanner · <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L1849">servers/cascade-engine/package-lock.json:1849</a> · osv-scanner · <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L1926">servers/cascade-engine/package-lock.json:1926</a> · osv-scanner · <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L2195">servers/cascade-engine/package-lock.json:2195</a> · osv-scanner · <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L2229">servers/cascade-engine/package-lock.json:2229</a> · osv-scanner · <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L2251">servers/cascade-engine/package-lock.json:2251</a> · osv-scanner</p>
+<h2>Couldn't determine — here's how to check</h2>
+<p class="dim">The scan can't see these from code. They hold the verdict at PROVISIONAL until you answer.</p>
+<ul>
+<li><strong>AFR-01 Agent registry with a named owner ★</strong> — Do you keep a list of every agent you run in production, and does each one have a single named owner?</li>
+<li><strong>AFR-02 Blast-radius record</strong> — For each agent, have you written down what it can do, what data it can reach, and how much it can spend?</li>
+<li><strong>AFR-03 Decommissioning</strong> — When an agent is no longer needed, do you retire it and revoke its access?</li>
+<li><strong>AFR-04 Minimum scope ★</strong> — Does each agent have access only to the tools and data its job needs, and nothing extra 'just in case'?</li>
+<li><strong>AFR-05 Per-agent credentials ★</strong> — Does each agent use its own revocable credentials rather than a shared or master key?</li>
+<li><strong>AFR-06 No standing production secrets</strong> — Do agent tokens for production expire in hours rather than months?</li>
+<li><strong>AFR-07 Sandbox by default</strong> — Can a brand-new or untrusted agent reach production data or spend money without a deliberate promotion step?</li>
+<li><strong>AFR-08 Treat all input as untrusted</strong> — Do an agent's privileges come only from your configuration, never from content it reads (web pages, emails, other agents)?</li>
+<li><strong>AFR-09 Vet before you connect ★</strong> — Before you connect a tool, skill, or MCP server, do you review what it does and pin it to a version?</li>
+<li><strong>AFR-11 Consequence classification ★</strong> — Have you labeled each action an agent can take as low, high, or critical consequence?</li>
+<li><strong>AFR-12 Approval gate on High ★</strong> — Do high-consequence actions wait for a human to approve them before they run?</li>
+<li><strong>AFR-13 Dual control on Critical</strong> — Do the rare, irreversible actions need two people, or a hard limit the agent can't cross alone?</li>
+<li><strong>AFR-14 Default-deny on unclassified</strong> — If an action hasn't been classified, is the agent blocked from taking it?</li>
+<li><strong>AFR-15 Hard spending limits</strong> — Are spending caps enforced at the tool or payment provider, not just written into the prompt?</li>
+<li><strong>AFR-16 Action log ★</strong> — Do you record every agent action (what triggered it, what it did, and the result) in a log you can replay?</li>
+<li><strong>AFR-17 Anomaly alerts ★</strong> — Does something alert a human in real time when an agent does something unusual (odd spend, new connector, off-hours)?</li>
+<li><strong>AFR-18 Live visibility</strong> — Can someone answer 'what are our agents doing right now?' without grepping raw logs?</li>
+<li><strong>AFR-19 Retention</strong> — Do you keep logs long enough to investigate an incident discovered weeks later?</li>
+<li><strong>AFR-20 Kill-switch ★</strong> — Do you have a tested way to stop any agent (or all of them at once) right now, and have you tried it recently?</li>
+<li><strong>AFR-21 Circuit breakers</strong> — Does an agent automatically pause when it crosses a threshold (spend, error rate), before a human reacts?</li>
+<li><strong>AFR-22 Blast-radius limits</strong> — Are there per-agent rate limits and segmentation so one compromised agent can't reach everything?</li>
+<li><strong>AFR-23 Memory hygiene</strong> — Can you point to each agent's memory store, expire what it stores, and wipe it on demand?</li>
+<li><strong>AFR-24 Rollback plan</strong> — For each high-consequence action, do you know how to undo it?</li>
+<li><strong>AFR-25 Incident runbook ★</strong> — Is there a one-page written plan for when an agent goes wrong (who's notified, how to contain, who decides), and can the team find it?</li>
+<li><strong>AFR-26 Severity levels</strong> — Have you defined what counts as a Sev1 / Sev2 / Sev3 incident?</li>
+<li><strong>AFR-27 Test changes before they ship</strong> — Do prompt, model, and tool changes run against a fixed set of checks (including an injection probe) before deploy?</li>
+<li><strong>AFR-28 Blameless post-incident review</strong> — After an incident or near-miss, do you write up what happened and which control gets added or tightened?</li>
+<li><strong>AFR-29 Continuous review</strong> — Do you re-run this assessment on a schedule and after every incident?</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>2 proposed assessment(s) had template/example-file evidence stripped; those left with no other evidence were downgraded to 'couldn't determine'.</li>
+<li>12 finding(s) were summarised rather than shown individually to the model (all remain in the report).</li>
+<li>PROVISIONAL: 10 Boldface control(s) not yet assessed — AFR-01, AFR-04, AFR-05, AFR-09, AFR-11, AFR-12, AFR-16, AFR-17, AFR-20, AFR-25. Answer the operational overlay (or run without --non-interactive) to resolve.</li>
+</ul>
+<hr>
+<p>This is a Runworthy scan against the Agent Flight Rules (<a href="https://github.com/geofflava/agent-flight-rules">AFR v0.2.0</a>), CC BY 4.0. It reports findings and gaps from static analysis and your answers — it is not a certification that your agents are secure, and it can't see how they behave at runtime. Verify anything marked "likely" or "couldn't determine" before you rely on it.</p>
+  </article>
+</main>
+<footer class="site">
+  <div class="wrap foot">
+    <span>© 2026 Geoff "Lava" Lavagnino · lavaforge.dev is the workshop; Obsidicore is the company.</span>
+    <nav aria-label="Footer">
+      <a href="https://github.com/geofflava">GitHub</a>
+      <a href="https://github.com/geofflava/runworthy">Runworthy</a>
+      <a href="https://github.com/geofflava/agent-flight-rules">Agent Flight Rules</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receipts 001 — I ran my scanner on my own agent first · lavaforge.dev</title>
+<meta name="description" content="Runworthy's first published receipts: my own agent repo graded PROVISIONAL, the false alarm it didn't raise, and how to run it yourself.">
+<link rel="canonical" href="https://lavaforge.dev/receipts/001">
+<meta name="theme-color" content="#17130E">
+<meta name="color-scheme" content="dark">
+<meta name="author" content="Geoff &quot;Lava&quot; Lavagnino">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="lavaforge.dev">
+<meta property="og:url" content="https://lavaforge.dev/receipts/001">
+<meta property="og:title" content="Receipts 001 — I ran my scanner on my own agent first">
+<meta property="og:description" content="My own agent repo graded PROVISIONAL, the false alarm the scanner didn't raise, and how to run it yourself.">
+<meta property="og:image" content="https://lavaforge.dev/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Receipts 001 — I ran my scanner on my own agent first">
+<meta name="twitter:description" content="My own agent repo graded PROVISIONAL, the false alarm the scanner didn't raise, and how to run it yourself.">
+<meta name="twitter:image" content="https://lavaforge.dev/og.png">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<style>
+  :root{
+    --basalt:#17130E; --basalt-2:#211B14; --ink:#EDE5D8; --ash:#9C9080;
+    --line:rgba(237,229,216,.14); --line-soft:rgba(237,229,216,.08);
+    --ember:#FF5B1F; --go:#7FC29B; --wip:#E8B450;
+    --mono:"Cascadia Code","JetBrains Mono",Consolas,ui-monospace,"SF Mono",monospace;
+    --body:system-ui,"Segoe UI",Inter,-apple-system,sans-serif;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{
+    background:var(--basalt) radial-gradient(90rem 28rem at 50% -12rem, rgba(255,91,31,.07), transparent 70%) no-repeat;
+    color:var(--ink); font:16px/1.7 var(--body);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--ink)}
+  a:hover{color:var(--ember)}
+  :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:2px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  .label{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+
+  header.site{border-bottom:1px solid var(--line-soft)}
+  .nav{display:flex;align-items:center;gap:18px 28px;padding:18px 0;flex-wrap:wrap}
+  .wordmark{font:700 13px/1 var(--mono);letter-spacing:.18em;text-decoration:none;color:var(--ink)}
+  .wordmark em{color:var(--ember);font-style:normal}
+  .nav nav{margin-left:auto;display:flex;gap:14px 22px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+  .nav nav a{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--ash)}
+  .nav nav a:hover{color:var(--ember)}
+
+  article{max-width:720px;margin:0 auto;padding:52px 0 0}
+  .postbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+  .postbar::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+  h1{font:800 clamp(24px,3.6vw,34px)/1.3 var(--mono);letter-spacing:-.01em;margin:0 0 10px;max-width:24ch}
+  .prov{font:500 12px/1.7 var(--mono);letter-spacing:.06em;color:var(--ash);margin-bottom:34px}
+  h2{font:700 17px/1.4 var(--mono);letter-spacing:.02em;margin:40px 0 14px}
+  p{margin:0 0 16px;color:var(--ink)}
+  article a{text-decoration-color:rgba(255,91,31,.55);text-underline-offset:3px}
+  strong{font-weight:650}
+  ul{padding-left:22px;margin:0 0 16px}
+  li{margin:0 0 14px}
+  li p{margin-bottom:10px}
+  code{font:500 13.5px/1.5 var(--mono);background:var(--basalt-2);border:1px solid var(--line-soft);border-radius:2px;padding:1px 5px}
+  pre{background:var(--basalt-2);border:1px solid var(--line);border-radius:2px;padding:16px 18px;overflow-x:auto;margin:0 0 16px}
+  pre code{background:none;border:none;padding:0;font-size:13.5px}
+  blockquote{border-left:2px solid var(--ember);background:rgba(33,27,20,.6);padding:12px 16px;margin:0 0 14px;color:var(--ink)}
+  blockquote p{margin:0;font-size:15px}
+  .footnote{border-top:1px solid var(--line-soft);margin-top:44px;padding-top:18px;font-size:14px;color:var(--ash);font-style:italic}
+  .footnote a{color:var(--ash)}
+  .backrow{margin:34px 0 0}
+  .backrow a{font:600 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ash)}
+  .backrow a:hover{color:var(--ember)}
+
+  footer.site{margin-top:72px;border-top:1px solid var(--line-soft);padding:26px 0 40px}
+  .foot{display:flex;gap:14px 28px;flex-wrap:wrap;align-items:center;font:500 12px/1.7 var(--mono);letter-spacing:.04em;color:var(--ash)}
+  .foot nav{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap}
+  .foot a{color:var(--ash);text-decoration:none}
+  .foot a:hover{color:var(--ember)}
+  @media (max-width:520px){.nav nav{margin-left:0}}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="wordmark" href="/">LAVA<em>FORGE</em>.DEV</a>
+    <nav aria-label="Site">
+      <a href="/#building">Now building</a>
+      <a href="/#about">About</a>
+      <a href="/#work">Work</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <article>
+    <div class="postbar"><span class="label">lavaforge.dev · receipts · 001</span></div>
+    <h1>I ran my scanner on my own agent first</h1>
+    <p class="prov">2026-07-07 · runworthy 0.2.0 · detectors: gitleaks 8.30.1 · osv-scanner 2.4.0 · skillspector 2.3.9</p>
+
+    <p>Runworthy is my agent operations scanner: it reads a repo and answers the question you actually have — is this safe to run, and what do I fix first? This week I pointed it at two real agent repos, mine included. Both came back <strong>PROVISIONAL</strong>, the grade that means unknowns, not failures (the other two are GO and NO-GO). Here's what the reports said.</p>
+
+    <h2>My own repo, graded</h2>
+    <p><a href="https://github.com/geofflava/Research-Cascade">Research-Cascade</a> is my open-source research engine, an MCP server with a knowledge graph and trust scoring. The scan (<a href="/receipts/001-research-cascade">full report</a>) came back PROVISIONAL with a short list:</p>
+    <ul>
+      <li>
+        <p><strong>Update eleven packages.</strong> Eleven dependencies in the engine's npm lockfile have open security advisories — <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L1849">hono alone carries twenty</a>, and <a href="https://github.com/geofflava/Research-Cascade/blob/5ea2ec3a89c458d85a6233e97a72503485e6b02b/servers/cascade-engine/package-lock.json#L3033">the one against vitest</a> is rated critical. An agent inherits every one. Straight from the report:</p>
+        <blockquote><p><strong>Fix:</strong> Run your package manager's update or audit-fix command to bring these libraries to patched versions, starting with hono since it has the most advisories. Re-scan afterward to confirm the vulnerabilities are cleared.</p></blockquote>
+        <p>Confirmed gap; an afternoon of updates and a re-scan.</p>
+      </li>
+      <li>
+        <p><strong>Answer ten questions.</strong> A named owner, per-agent credentials, a tested kill-switch, an incident runbook: the ten non-negotiables a scan can't read from code. Runworthy asks them in plain English after the scan and folds the answers into the grade. A few of mine are "not yet."</p>
+      </li>
+    </ul>
+    <p>What it didn't flag: one of the bundled detectors found six prompt-injection strings in the repo — all in test files, because Research-Cascade tests its own injection defenses. The pipeline treats test fixtures as non-evidence, so none of them turned into an assessment.</p>
+
+    <h2>The false alarm it didn't raise</h2>
+    <p>The second repo is a widely used open-source research agent. I'm not naming it or publishing its report — house policy until a maintainer's seen it. Same shape as mine: PROVISIONAL, four dependencies with open advisories (two rated critical), and two code paths flagged as leads worth an engineer's hour.</p>
+    <p>One detector flagged a "generic API key" in that project's <code>.env.example</code>, the template with empty <code>OPENAI_API_KEY=</code> lines you're meant to fill in. Plenty of tools would take the regex hit at face value, call it a hardcoded credential, and stamp the project NO-GO over a value that doesn't exist. Runworthy files a placeholder in a template as informational, where it can't touch the grade. In the graded report it never comes up at all.</p>
+
+    <h2>Run it</h2>
+    <pre><code>pip install "runworthy[llm]"
+runworthy doctor
+runworthy scan &lt;repo-url-or-path&gt;</code></pre>
+    <p><code>doctor</code> lists the three open-source detectors and tells you which are missing. <code>--no-llm</code> runs free with no key and no model; the graded report runs on your own key — Anthropic direct, or OpenRouter with one extra env var (<code>RUNWORTHY_MODEL_TRANSPORT=openai_compat</code>). The graded scans above cost less than a dime each, and the model sees redacted finding summaries (file, line, what the detector saw), never your source or secret values. The two repos here are Node and Python; the detectors cover the usual ecosystems either way.</p>
+    <p>The rubric behind the grade, the <a href="https://github.com/geofflava/agent-flight-rules">Agent Flight Rules</a>, is CC BY 4.0: ten non-negotiables and nineteen supporting controls, yours whether or not you ever run the scanner.</p>
+
+    <p class="footnote">A Runworthy scan reports findings and gaps from static analysis and your answers; it is not a certification, and it can't see how an agent behaves at runtime. Verify anything marked "likely" or "couldn't determine" before you rely on it.</p>
+
+    <div class="backrow"><a href="/">← Back to the build log</a></div>
+  </article>
+</main>
+
+<footer class="site">
+  <div class="wrap foot">
+    <span>© 2026 Geoff "Lava" Lavagnino · lavaforge.dev is the workshop; Obsidicore is the company.</span>
+    <nav aria-label="Footer">
+      <a href="https://github.com/geofflava">GitHub</a>
+      <a href="https://obsidicore.com">Obsidicore</a>
+      <a href="https://github.com/geofflava/agent-flight-rules">Agent Flight Rules</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
