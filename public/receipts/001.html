@@ -116,6 +116,13 @@
     h1,h2{break-after:avoid}
     header.site,footer.site{border-color:#ddd}
   }
+
+  /* ---------- cross-document view transitions ---------- */
+  @view-transition{navigation:auto}
+  header.site{view-transition-name:site-header}
+  @media (prefers-reduced-motion: reduce){
+    ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none!important}
+  }
 </style>
 </head>
 <body>
