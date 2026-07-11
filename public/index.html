@@ -145,12 +145,9 @@
   .afr p{align-self:center}
 
   /* about */
-  .about-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:40px}
+  .about-grid{max-width:62ch}
   .about-grid p{margin-bottom:14px;color:var(--ash);font-size:15.5px}
   .about-grid p strong{color:var(--ink);font-weight:600}
-  .creds{display:flex;flex-direction:column;gap:10px}
-  .cred{border:1px solid var(--line);border-radius:2px;padding:14px 16px;font:600 11.5px/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase;font-variant-numeric:slashed-zero tabular-nums}
-  .cred span{display:block;color:var(--ash);font-weight:500;letter-spacing:.06em;margin-top:3px;text-transform:none}
 
   /* postmortems */
   .intro{color:var(--ash);margin:-10px 0 24px;font-size:15px}
@@ -195,7 +192,7 @@
     .nav nav a{font-size:11px;letter-spacing:.05em}
   }
   @media (max-width:860px){
-    .cards,.pms,.about-grid{grid-template-columns:1fr}
+    .cards,.pms{grid-template-columns:1fr}
     .mrow{grid-template-columns:auto 1fr;grid-template-areas:"n c" "d d"}
     .mrow .mname{grid-area:n}.mrow .chip{grid-area:c;justify-self:end}.mrow .mdesc{grid-area:d}
     .wrow{grid-template-columns:1fr auto;grid-template-areas:"t g" "d d"}
@@ -235,7 +232,7 @@
 <main class="wrap" id="main" tabindex="-1">
   <!-- signature: the step brief -->
   <div class="brief" role="region" aria-label="Step brief">
-    <div class="brief-bar"><span class="label">lavaforge.dev · build log</span></div>
+    <div class="brief-bar"><span class="label">lavaforge.dev · build log · updated 2026-07</span></div>
     <div class="brief-body">
       <div class="callsign"><span class="cs">Geoff "Lava" Lavagnino</span><span class="nm">Obsidicore · Firebase / GCP</span></div>
       <h1 class="boldface">Are your AI agents safe to run? <span class="ans">I'm building the answer.</span></h1>
@@ -301,14 +298,9 @@
     </div>
     <div class="about-grid">
       <div>
-        <p>I build agent systems on Firebase and Google Cloud at <strong>Obsidicore</strong>, and safety tooling for anyone else running agents. Before that I led engineering at an EdTech company, shipping RAG pipelines for K-12 school districts on Vertex AI.</p>
-        <p>The Air Force is where I learned the operational side: security operations, contingency planning, checklists written for the day something breaks. Lava was my callsign. It stuck to the domain, and the rest shows up in how I build.</p>
-        <p>I think in <strong>systems, not silos</strong>. Father of three.</p>
-      </div>
-      <div class="creds">
-        <div class="cred">USAF veteran<span>Security ops &amp; contingency planning</span></div>
-        <div class="cred">Systems, not silos<span>Behavioral counseling background meets systems engineering</span></div>
-        <div class="cred">Father of three<span>Three good reasons to log off on time</span></div>
+        <p>I build agent systems on Firebase and Google Cloud at <strong>Obsidicore</strong>. Runworthy is the safety tool I went looking for and couldn't find, so I'm building it. Most of the work lands on GitHub the week it happens.</p>
+        <p>Before this I led engineering at an EdTech company, and before that I was in the Air Force, where "boldface" means the checklist lines you never skip. Lava was my callsign. It stuck.</p>
+        <p>Father of three — three good reasons to log off on time.</p>
       </div>
     </div>
   </section>
@@ -346,15 +338,15 @@
     <div class="work-rows">
       <div class="wrow">
         <h3>AI research platform</h3><span class="tag">Company</span>
-        <p>900+ assets/month across four automated pipelines — Gemini analysis, summarization, knowledge-graph construction on Cloud Functions.</p>
+        <p>900+ assets a month from four pipelines that run themselves.</p>
       </div>
       <div class="wrow">
         <h3>Multi-brand content automation</h3><span class="tag">Company</span>
-        <p>Multi-brand publishing pipeline: X API distribution, Cloud Scheduler timing, 20+ operational CLI commands.</p>
+        <p>Scheduled publishing across brands, humans on the gates.</p>
       </div>
       <div class="wrow">
-        <h3>K-12 RAG pipeline</h3><span class="tag">Company</span>
-        <p>Curriculum processing on Vertex AI embeddings + vector search; multi-tenant Firestore serving school districts.</p>
+        <h3>Curriculum pipeline for school districts</h3><span class="tag">Company</span>
+        <p>Classroom content processing, built to keep each district's data separate.</p>
       </div>
       <div class="wrow">
         <h3>Research Cascade</h3><a class="tag open" href="https://github.com/geofflava/Research-Cascade">Open — repo</a>
