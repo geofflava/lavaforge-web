@@ -22,16 +22,23 @@
     color-scheme:dark;
   }
   *{box-sizing:border-box;margin:0}
-  body{background:var(--basalt);color:var(--ink);font:15.5px/1.65 var(--body);-webkit-font-smoothing:antialiased}
-  a{color:var(--ink)}
+  body{background:var(--basalt) radial-gradient(90rem 28rem at 50% -12rem,rgba(255,91,31,.07),transparent 70%) no-repeat;color:var(--ink);font:15.5px/1.65 var(--body);-webkit-font-smoothing:antialiased}
+  a{color:var(--ink);transition:color .15s ease}
   a:hover{color:var(--ember)}
+  ::selection{background:rgba(255,91,31,.28);color:var(--ink);text-shadow:none}
+  ::-moz-selection{background:rgba(255,91,31,.28);color:var(--ink);text-shadow:none}
   :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:2px}
   .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
   .label{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+  h1,h2,h3{text-wrap:balance}
+  p,li{text-wrap:pretty}
+  li{font-variant-numeric:slashed-zero tabular-nums}
   header.site{border-bottom:1px solid var(--line-soft)}
   .nav{display:flex;align-items:center;gap:18px 28px;padding:18px 0;flex-wrap:wrap}
   .wordmark{font:700 13px/1 var(--mono);letter-spacing:.18em;text-decoration:none;color:var(--ink)}
-  .wordmark em{color:var(--ember);font-style:normal}
+  .wordmark em{color:var(--ember);font-style:normal;background:linear-gradient(var(--ember),var(--ember)) 0 100%/0% 2px no-repeat;padding-bottom:2px;transition:background-size .25s ease}
+  .wordmark:hover em,.wordmark:focus-visible em{background-size:100% 2px}
+  .wordmark:hover{color:var(--ink)}
   .nav nav{margin-left:auto}
   .nav nav a{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;text-decoration:none;color:var(--ash)}
   .nav nav a:hover{color:var(--ember)}
@@ -43,13 +50,13 @@
   h3{font:700 14.5px/1.4 var(--mono);margin:26px 0 6px;color:var(--ink)}
   p{margin:0 0 13px}
   p.dim{color:var(--ash);font-style:italic}
-  p.cardmeta{font:600 12px/1.6 var(--mono);letter-spacing:.05em;color:var(--wip);margin-top:-2px}
+  p.cardmeta{font:600 12px/1.6 var(--mono);letter-spacing:.05em;color:var(--wip);margin-top:-2px;font-variant-numeric:slashed-zero tabular-nums}
   ul{padding-left:22px;margin:0 0 14px}
   li{margin:0 0 9px}
-  code{font:500 12.5px/1.5 var(--mono);background:var(--basalt-2);border:1px solid var(--line-soft);border-radius:2px;padding:1px 4px;overflow-wrap:anywhere}
+  code{font:500 12.5px/1.5 var(--mono);background:var(--basalt-2);border:1px solid var(--line-soft);border-radius:2px;padding:1px 4px;overflow-wrap:anywhere;font-variant-numeric:slashed-zero tabular-nums}
   a{overflow-wrap:anywhere}
   .tablewrap{overflow-x:auto;margin:0 0 16px;border:1px solid var(--line);border-radius:2px}
-  table{border-collapse:collapse;width:100%;font:500 13px/1.5 var(--mono)}
+  table{border-collapse:collapse;width:100%;font:500 13px/1.5 var(--mono);font-variant-numeric:slashed-zero tabular-nums}
   th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line-soft)}
   th{color:var(--ash);font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
   tbody tr:last-child td{border-bottom:none}
@@ -59,6 +66,28 @@
   .foot nav{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap}
   .foot a{color:var(--ash);text-decoration:none}
   .foot a:hover{color:var(--ember)}
+  @media (prefers-reduced-motion:reduce){
+    .wordmark em{transition:none}
+  }
+  @media print{
+    body{background:#fff;color:#111;font-size:11pt}
+    a{color:#111}
+    .wordmark{color:#111}
+    .wordmark em{color:#b23000;background:none}
+    h1,h2,h3,strong{color:#111}
+    p.dim{color:#444}
+    p.cardmeta{color:#8a5a00}
+    .noticebar{background:#f4f2ef;border-color:#ddd;color:#333}
+    .noticebar a{color:#111}
+    code{background:#f4f2ef;border-color:#ddd;color:#111}
+    th{color:#444}
+    .tablewrap{border-color:#ddd}
+    th,td{border-bottom-color:#ddd}
+    .tablewrap,tr,li,.cardmeta{break-inside:avoid}
+    h2,h3{break-after:avoid}
+    header.site,footer.site,hr{border-color:#ddd}
+    .foot{color:#333}
+  }
 </style>
 </head>
 <body>
