@@ -53,6 +53,9 @@
   :focus-visible{outline:2px solid var(--ember);outline-offset:2px;border-radius:2px}
   .btn:focus-visible,.nav a:focus-visible,.card:focus-visible,.wordmark:focus-visible{box-shadow:0 0 0 4px rgba(255,91,31,.16)}
   .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  .skip{position:fixed;top:-52px;left:16px;z-index:10;font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);background:var(--basalt-2);border:1px solid var(--ember);border-radius:2px;padding:12px 16px;text-decoration:none}
+  .skip:focus-visible{top:12px}
+  @media (prefers-reduced-motion: no-preference){.skip{transition:top .18s ease}}
   .label{font:600 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
   h1,h2,h3,.card h3,.pm h3,.wrow h3{text-wrap:balance}
   p,.brief-sub,.mdesc,.card p,.pm p{text-wrap:pretty}
@@ -105,6 +108,7 @@
   .btn{font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;text-decoration:none;border-radius:2px;padding:13px 18px;border:1px solid var(--line);transition:background-color .18s ease,border-color .18s,color .18s,box-shadow .18s,transform .06s ease}
   .btn.primary{background:var(--ember);border-color:var(--ember);color:#1a0d05}
   .btn.primary:hover{background:#ff7038;color:#1a0d05;box-shadow:0 6px 22px -10px rgba(255,91,31,.55)}
+  .btn.primary:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
   .btn.quiet:hover{border-color:var(--ember);color:var(--ember)}
   .btn:active{transform:translateY(1px)}
 
@@ -134,7 +138,7 @@
   .card p{color:var(--ash);font-size:14.5px}
   .card .status{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);font:500 12px/1.6 var(--mono);color:var(--wip)}
   .card .links{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px}
-  .card .links a{font:600 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ember);padding-bottom:2px}
+  .card .links a{font:600 12px/1 var(--mono);letter-spacing:.06em;color:var(--ink);text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:1px;text-underline-offset:3px}
   .card .links a:hover{color:var(--ember)}
   .afr{grid-column:1/-1;display:grid;grid-template-columns:250px 1fr;gap:8px 32px;align-items:start;border-left:3px solid var(--ember)}
   .afr h3{margin-top:10px;margin-bottom:0}
@@ -179,6 +183,11 @@
   .foot nav{display:flex;gap:18px;flex-wrap:wrap}
   .foot a{color:var(--ash);text-decoration:none}
   .foot a:hover{color:var(--ember)}
+  .nav nav a,.foot a{background:linear-gradient(var(--ember),var(--ember)) 0 100%/0 1px no-repeat}
+  .nav nav a:hover,.nav nav a:focus-visible,.foot a:hover,.foot a:focus-visible{background-size:100% 1px}
+  @media (prefers-reduced-motion: no-preference){
+    .nav nav a,.foot a{transition:color .15s ease,background-size .18s ease}
+  }
 
   @media (max-width:520px){
     .nav{gap:12px 16px}
@@ -205,6 +214,7 @@
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <header class="site">
   <div class="wrap nav">
     <a class="wordmark" href="/">LAVA<em>FORGE</em>.DEV</a>
@@ -222,7 +232,7 @@
   </div>
 </header>
 
-<main class="wrap">
+<main class="wrap" id="main" tabindex="-1">
   <!-- signature: the step brief -->
   <div class="brief" role="region" aria-label="Step brief">
     <div class="brief-bar"><span class="label">lavaforge.dev · build log</span></div>
